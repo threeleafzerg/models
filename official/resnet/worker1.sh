@@ -2,9 +2,9 @@
 
 export TF_CONFIG='{
     "cluster": {
-          "worker": ["192.168.20.51:1111", "192.168.20.52.1112"]
-            },
-              "task": {"type": "worker", "index": 0}
+          "worker": ["192.168.20.51:1111", "192.168.20.52:1112"]
+    },
+    "task": {"type": "worker", "index": 0}
 }'
 
 export PYTHONPATH=/home/zhouhaiy/tensorflow/train-model/models:${PYTHONPATH}
