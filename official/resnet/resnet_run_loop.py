@@ -42,7 +42,7 @@ from official.resnet import imagenet_preprocessing
 from official.utils.misc import distribution_utils
 from official.utils.misc import model_helpers
 
-
+from tensorflow.contrib.distribute.python import collective_all_reduce_strategy
 ################################################################################
 # Functions for input processing.
 ################################################################################
@@ -470,8 +470,10 @@ def resnet_main(
       intra_op_parallelism_threads=flags_obj.intra_op_parallelism_threads,
       allow_soft_placement=True)
 
-  distribution_strategy = distribution_utils.get_distribution_strategy(
-      flags_core.get_num_gpus(flags_obj), flags_obj.all_reduce_alg)
+  # distribution_strategy = distribution_utils.get_distribution_strategy(
+  #     flags_core.get_num_gpus(flags_obj), flags_obj.all_reduce_alg)
+  distribution_strategy = collective_all_reduce_strategy.CollectiveAllReduceStrategy(
+                            num_gpus_per_worker=0)
 
   # Creates a `RunConfig` that checkpoints every 24 hours which essentially
   # results in checkpoints determined only by `epochs_between_evals`.
